@@ -5,414 +5,262 @@
 
 最新页面：
 [AI 嵌入式编程的闭环实践](https://x-itg.github.io/)
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>AI编程调试的五层进化 | 从碰运气到工程化闭环</title>
-    <!-- Font Awesome 6 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
 
-        body {
-            background: #f5f9ff;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-            color: #1e2a3e;
-            line-height: 1.6;
-            padding: 2rem 1rem;
-        }
+# AI 编程调试的五层进化：从碰运气到工程化闭环
 
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-        }
+> 五层递进，每一招都解决上一招的痛点，最终形成最低成本、最高可靠性的 AI 协作范式。
 
-        /* 科技感明亮header */
-        .hero {
-            text-align: center;
-            margin-bottom: 2.5rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 2px solid #e2edff;
-        }
-        .hero h1 {
-            font-size: 2.8rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #1E3A8A, #3B82F6, #06B6D4);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            letter-spacing: -0.02em;
-            margin-bottom: 0.75rem;
-        }
-        .hero .sub {
-            font-size: 1.15rem;
-            color: #2c4f7c;
-            max-width: 760px;
-            margin: 0 auto;
-            border-left: 4px solid #3b82f6;
-            padding-left: 1.2rem;
-            text-align: left;
-            background: #ffffffcc;
-            border-radius: 0 16px 16px 0;
-        }
-        .badge {
-            display: inline-block;
-            background: #e8f0fe;
-            border: 1px solid #bdd3ff;
-            border-radius: 40px;
-            padding: 0.3rem 1.2rem;
-            font-size: 0.8rem;
-            margin-bottom: 1rem;
-            color: #1e4a76;
-            font-weight: 500;
-        }
+---
 
-        /* 卡片明亮风格 */
-        .card {
-            background: #ffffff;
-            border-radius: 1.5rem;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.03), 0 2px 6px rgba(0, 0, 0, 0.05);
-            border: 1px solid #eef2f8;
-            padding: 1.8rem;
-            margin-bottom: 2rem;
-            transition: all 0.2s ease;
-        }
-        .card:hover {
-            box-shadow: 0 20px 30px -12px rgba(0, 20, 50, 0.1);
-            border-color: #cbdffa;
-        }
+## 第零层：起点 —— 把代码贴给 AI，等它猜
 
-        .level-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: #f0f4fe;
-            padding: 0.3rem 1rem;
-            border-radius: 60px;
-            font-family: monospace;
-            font-weight: 600;
-            font-size: 0.85rem;
-            margin-bottom: 1.2rem;
-            border-left: 3px solid #3b82f6;
-            color: #1e3a8a;
-        }
-        h2 {
-            font-size: 1.8rem;
-            margin-bottom: 0.75rem;
-            font-weight: 600;
-            letter-spacing: -0.3px;
-            color: #0f2b3d;
-        }
-        h3 {
-            font-size: 1.3rem;
-            margin: 1rem 0 0.5rem;
-            color: #1e4a76;
-            font-weight: 500;
-        }
-        .code-block {
-            background: #f8fafc;
-            border-radius: 1rem;
-            padding: 1rem;
-            overflow-x: auto;
-            margin: 1.2rem 0;
-            border: 1px solid #e2edf2;
-            font-family: 'JetBrains Mono', 'Fira Code', monospace;
-            font-size: 0.85rem;
-            line-height: 1.5;
-            color: #0c4a6e;
-        }
-        .code-block pre {
-            margin: 0;
-            color: #0b2b42;
-        }
-        .inline-code {
-            background: #eef2ff;
-            padding: 0.2rem 0.4rem;
-            border-radius: 8px;
-            font-family: monospace;
-            font-size: 0.9em;
-            color: #0f3b6f;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1.5rem 0;
-            font-size: 0.88rem;
-            border-radius: 1rem;
-            overflow: hidden;
-            background: white;
-        }
-        th {
-            background: #eef3fc;
-            padding: 0.9rem;
-            text-align: left;
-            font-weight: 600;
-            color: #1a4c7a;
-        }
-        td {
-            padding: 0.8rem;
-            border-bottom: 1px solid #e9edf2;
-            background: white;
-        }
-        .highlight {
-            background: #eef9ff;
-            border-left: 4px solid #2b7fff;
-            padding: 1rem 1.4rem;
-            border-radius: 1rem;
-            margin: 1.5rem 0;
-            color: #1a3857;
-        }
-        .quote {
-            border-left: 4px solid #3b82f6;
-            background: #fafcff;
-            padding: 1rem 1.2rem;
-            border-radius: 1rem;
-            margin: 1rem 0;
-            font-size: 0.95rem;
-        }
-        .grid-2 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1rem;
-            margin: 1.2rem 0;
-        }
-        footer {
-            margin-top: 3rem;
-            text-align: center;
-            padding: 2rem 0;
-            border-top: 1px solid #e2edf2;
-            color: #5b7a9a;
-            font-size: 0.85rem;
-        }
-        @media (max-width: 640px) {
-            .hero h1 { font-size: 1.9rem; }
-            .card { padding: 1.2rem; }
-            h2 { font-size: 1.5rem; }
-        }
-        i.icon {
-            margin-right: 0.4rem;
-            color: #2b6cb0;
-        }
-        .pill {
-            background: #e4edfa;
-            border-radius: 30px;
-            padding: 0.2rem 0.7rem;
-            font-size: 0.7rem;
-            font-weight: 500;
-        }
-    </style>
-</head>
-<body>
-<div class="container">
-    <div class="hero">
-        <div class="badge"><i class="fas fa-microchip"></i> 嵌入式 · AI 协作范式</div>
-        <h1>AI编程调试的五层进化</h1>
-        <div class="sub">
-            <i class="fas fa-chart-line"></i> 从零散的「静态猜测」到「工程化闭环」，每一招都解决上一层的痛点，最终实现最低成本、最高可靠性的 Vibe+Verify 混合范式。
-        </div>
-    </div>
+这是大多数开发者开始的方式：遇到 bug，把相关代码片段复制到对话框，描述现象，然后 AI 列出五六种可能原因。你一条条去试，运气好半小时解决，运气不好折腾一整天。
 
-    <!-- 第零层 -->
-    <div class="card">
-        <div class="level-badge"><i class="fas fa-question-circle"></i> 第零层 · 起点</div>
-        <h2>把代码贴给 AI，等它“猜”</h2>
-        <p>典型场景：遇到 bug → 复制代码片段 → 描述现象 → AI 列出 5~6 种可能原因（终端电阻？波特率误差？滤波器？）。开发者逐一排查，运气好半小时，运气差半天毫无进展。</p>
-        <div class="highlight">
-            <i class="fas fa-brain"></i> <strong>根本痛点</strong>：AI 只能基于静态代码做<strong>静态推理</strong>，而大多数 bug 源于动态行为（状态跃迁、变量运行时值、时序）。缺少运行时“眼睛”，再强的模型也只能盲人摸象。
-        </div>
-    </div>
+**痛点**：AI 看不见运行时的状态。它只能基于静态代码做**静态推理**，而大多数 bug 出在动态行为上（状态跃迁、时序、变量实际值）。你说“收不到 COMMIT”，AI 不知道你的 epoch 是多少、对方发来的 epoch 是多少、你的滤波器到底匹配了没有。
 
-    <!-- 第一招 -->
-    <div class="card">
-        <div class="level-badge"><i class="fas fa-eye"></i> 第一招 · 可观测性</div>
-        <h2>结构化日志 — 让 AI 拥有“眼睛”</h2>
-        <p>将运行时状态用 <strong class="inline-code">语义化键值对 + 文件名/行号</strong> 输出，AI 可直接解析并定位问题，不再罗列通用原因。</p>
-        <div class="code-block">
-            <pre>#define LOG(level, fmt, ...) \
+**结论**：静态代码 + 自然语言描述，信息带宽太窄。
+
+---
+
+## 第一招：结构化日志 —— 让 AI 拥有“眼睛”
+
+### 核心思想
+
+把运行时状态用**语义化、键值对、带位置信息**的方式打印出来。AI 不再靠猜，而是直接“看到”设备内部。
+
+### 技术实现
+
+```c
+// 传统做法（AI 看不懂）
+printf("state=%d", state);      // 输出: state=6
+
+// 改进做法（AI 可解析）
+#define LOG(level, fmt, ...) \
     printf("[%s] %s:%d " fmt "\r\n", level, __FILE__, __LINE__, ##__VA_ARGS__)
 
 LOG("INFO", "state=%s epoch=%d", state_to_str(state), epoch);
-// 输出: [INFO] can_slave.c:412 state=ONLINE_FIXED epoch=2</pre>
-        </div>
-        <div class="grid-2">
-            <div><i class="fas fa-check-circle" style="color:#2b7fff"></i> <strong>语义化</strong>：ONLINE_FIXED 比数字6更友好</div>
-            <div><i class="fas fa-check-circle" style="color:#2b7fff"></i> <strong>键值对</strong>：正则解析，AI 能提取变量</div>
-            <div><i class="fas fa-check-circle" style="color:#2b7fff"></i> <strong>行号超链接</strong>：VSCode 终端一键跳转源码</div>
-        </div>
-        <div class="quote">✨ 解决：AI 不再罗列模糊原因，直接指出“第412行 epoch 不同步”。<br>⚠️ 遗留：AI 仍需完整工程上下文理解 epoch 同步协议逻辑。</div>
-    </div>
+// 输出: [INFO] can_slave.c:412 state=ONLINE_FIXED epoch=2
+```
 
-    <!-- 第二招 -->
-    <div class="card">
-        <div class="level-badge"><i class="fas fa-folder-tree"></i> 第二招 · 统一上下文</div>
-        <h2>让 AI 理解你的「世界」</h2>
-        <p>把固件源码、上位机脚本、协议文档、典型日志放在统一目录，整体交给 AI。AI 可追踪从 PC 命令到 MCU 状态机的完整数据流。</p>
-        <div class="code-block">
-            <pre>project/
-├── firmware/          # 所有 .c/.h (含 LOG 宏)
-├── host/              # Python 测试脚本
-├── docs/              # protocol.md, 状态映射表
-└── logs/              # 正常/异常运行日志</pre>
-        </div>
-        <p>使用方式：<span class="inline-code">"请分析该目录下工程，日志在 logs/failure.txt"</span> → AI 自动检索相关文件，理解 epoch, COMMIT 帧的含义与状态机预期。</p>
-        <div class="quote">✨ 解决：AI 分析脱离设计意图的问题消失。<br>⚠️ 遗留：每次调试上传整个工程 token 成本较高，且修改代码仍需手动复制粘贴。</div>
-    </div>
+**三个关键设计**：
+1. **语义化名称**：`ONLINE_FIXED` 比 `6` 对 AI 友好
+2. **键值对格式**：`state=xxx epoch=yyy` 可被正则解析
+3. **文件名+行号**：VSCode 终端自动识别为超链接，一键跳转源码
 
-    <!-- 第三招 -->
-    <div class="card">
-        <div class="level-badge"><i class="fas fa-people-arrows"></i> 第三招 · 多模型协作</div>
-        <h2>写代码与分析分离，成本最优</h2>
-        <p><strong class="inline-code">低成本模型</strong> (侧边栏 Copilot / Continue / minimax) 负责高频代码生成与重构。<br>
-        <strong class="inline-code">高性能模型</strong> (DeepSeek-R1 / GPT-4o) 低频用于深度日志分析、架构审查和根因定位。</p>
-        <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
-            <li>生成初始代码 → 低成本 (~$0.05)</li>
-            <li>运行获得日志 → 打包给高性能模型 → 分析并输出 <span class="inline-code">git diff</span> (~$0.3)</li>
-            <li>低成本模型根据 diff 修改 → 快速迭代</li>
-        </ul>
-        <div class="highlight">
-            <i class="fas fa-charging-station"></i> 结果：高频写代码用低价模型，低频深度分析用高价模型，总成本降低约 65%，分析质量飞跃。
-        </div>
-    </div>
+### 解决了什么
 
-    <!-- 第四招 -->
-    <div class="card">
-        <div class="level-badge"><i class="fas fa-terminal"></i> 第四招 · VSCode 一体化闭环</div>
-        <h2>一键完成「修改 → 烧录 → 观察」</h2>
-        <p>将编译、烧录、串口监视、测试脚本全部集成到 <span class="inline-code">.vscode/tasks.json</span>，配合终端复用，秒级闭环反馈。</p>
-        <div class="code-block">
-            <pre>{
+- AI 可以直接告诉你：“第 412 行 state=ONLINE_FIXED 但 epoch 不匹配对方，说明同步逻辑未触发”
+- 不再罗列通用原因，定位精准到行
+
+### 遗留问题
+
+日志有了，但 AI 仍然需要完整的工程上下文才能理解“epoch 同步逻辑”是什么。你只给一个日志片段，它不知道你的协议设计。
+
+---
+
+## 第二招：统一工程上下文 —— 让 AI 理解你的“世界”
+
+### 核心思想
+
+将固件源码、上位机脚本、协议文档、典型日志放到同一个目录结构中，**整体打包**给 AI。AI 可以从 PC 命令一路追踪到 MCU 状态机。
+
+### 技术实现
+
+```
+project/
+├── firmware/          # 所有 .c/.h
+├── host/              # 测试脚本、模拟器
+├── docs/
+│   ├── protocol.md    # 帧格式、状态机描述
+│   └── enum_mapping.txt   # 状态码->名称映射
+└── logs/              # 正常/异常的完整日志
+```
+
+使用时，直接对 AI 说：“请分析这个目录下的工程，日志在 logs/failure.txt，问题现象是……” AI 会自行检索相关文件。
+
+### 解决了什么
+
+- AI 能理解 `epoch` 是什么、`COMMIT` 帧的作用、状态机预期跃迁
+- 分析结果不再脱离你的设计意图
+
+### 遗留问题
+
+现在 AI 能“看懂”日志和代码了，但每次调试都需要把整个工程（可能几十个文件）塞给模型。对 Web 端大模型来说，上下文窗口虽大，但 token 成本不低。而且，**修改代码**这件事仍然需要你手动编辑，或者反复复制粘贴 AI 给出的代码块。
+
+---
+
+## 第三招：多模型协作 —— 写代码和分析分开
+
+### 核心思想
+
+- **侧边栏模型**（Copilot / Continue / 低成本 API）：常驻 IDE，负责**写代码、补全、重构**。速度快、单价低。
+- **Web 端大模型**（DeepSeek-R1 / GPT-4o）：负责**日志分析、架构审查、根因定位**。能力强、单价高，但低频使用。
+
+### 工作流
+
+1. 侧边栏模型按需求生成初始代码（成本 ~$0.05）
+2. 运行获得结构化日志
+3. 将日志 + 工程目录 发送给 Web 大模型分析（成本 ~$0.3）
+4. Web 模型输出 `git diff` 修改建议
+5. 侧边栏模型根据 diff 修改代码（低成本）
+6. 重复 2-5
+
+### 解决了什么
+
+- 成本最优：高频写代码用低价模型，低频深度分析用高价模型
+- 质量更高：Web 大模型的推理深度远超侧边栏模型
+
+### 遗留问题
+
+从“获得日志”到“应用修改”之间，仍然有多个手动步骤：复制日志、切换窗口、粘贴、等待分析、复制 diff、回到 IDE 修改……打断心流。能否把所有操作集成到一个界面里？
+
+---
+
+## 第四招：VSCode 一体化闭环 —— 所有动作一键完成
+
+### 核心思想
+
+将编译、烧录、串口监视、测试脚本全部集成到 VSCode 的 `tasks.json` 中，配合终端复用，**一次按键完成“修改→运行→观察日志”全流程**。
+
+### 技术实现
+
+```json
+// .vscode/tasks.json
+{
     "version": "2.0.0",
     "tasks": [
-        { "label": "build", "command": "make" },
-        { "label": "flash", "command": "openocd ...", "dependsOn": ["build"] },
-        { "label": "monitor", "command": "python -m serial.tools.miniterm COM4 115200" },
-        { "label": "full_loop", "dependsOn": ["build","flash","monitor"] }
+        { "label": "build", "type": "shell", "command": "make" },
+        { "label": "flash", "type": "shell", 
+          "command": "openocd -f interface/stlink.cfg -c 'program build/firmware.elf verify reset exit'",
+          "dependsOn": ["build"] },
+        { "label": "monitor", "type": "shell", 
+          "command": "python -m serial.tools.miniterm COM4 115200" },
+        { "label": "full_loop", "dependsOn": ["build", "flash", "monitor"] }
     ]
-}</pre>
-        </div>
-        <p>按下 <span class="inline-code">Ctrl+Shift+B → full_loop</span>，自动编译、烧录、打开串口监视器。日志中的 <span class="inline-code">can_slave.c:412</span> 可直接跳转源码，AI 助手 (Continue/Cline) 实时读取终端输出，形成零切换调试闭环。</p>
-        <div class="quote">✨ 解决：工具链割裂，反馈延迟从分钟级降到秒级。<br>⚠️ 遗留：新项目仍需手动编写 LOG 宏、目录结构、tasks.json — 重复劳动。</div>
-    </div>
+}
+```
 
-    <!-- 第五招：终极范式 -->
-    <div class="card" style="border-top: 4px solid #3b82f6; background: #ffffff;">
-        <div class="level-badge" style="background:#eef2ff;"><i class="fas fa-gem"></i> 第五招 · 终极范式</div>
-        <h2>Vibe + Verify：分层协作，极致经济与可靠</h2>
-        <p><strong class="inline-code">Vibe 层</strong>：使用极低成本模型（minimax / DeepSeek-V2 异步 API）以“氛围编程”模式，快速生成<strong>已内置结构化日志和标准工程骨架</strong>的模板。<br>
-        <strong class="inline-code">Verify 层</strong>：用高性能模型分析运行日志，输出精准修改（git diff）。<br>
-        两层通过 <span class="inline-code">agents.md</span> 统一行为规范，消除认知断层。</p>
-        
-        <h3>⚙️ 模板生成提示词（给 Vibe 模型）</h3>
-        <div class="code-block">
-            <pre>生成 STM32 CAN 自组织地址协议工程，要求：
-1. 使用如下 LOG 宏（包含 __FILE__ 与 __LINE__）
-2. 在每个状态转换、帧收发处调用 LOG，输出 key=value
-3. 目录结构：firmware/ , host/ , docs/ , logs/
-4. 自带 .vscode/tasks.json（build/flash/monitor）
-5. 一次性输出完整可编译代码</pre>
-        </div>
-        
-        <h3>📄 agents.md（统一协作准则）</h3>
-        <div class="code-block">
-            <pre># 对 Verify 模型
-- 收到日志后必须先定位「文件:行号」
-- 输出 git diff 格式修改，附带根因
-- 若出现数字状态(state=6)必须要求枚举映射，禁止猜测
+按下 `Ctrl+Shift+B` → `full_loop` → 自动编译、烧录、打开串口监视器。日志直接输出在 VSCode 终端里，点击 `can_slave.c:412` 瞬间跳转源码。
 
-# 对 Vibe 模型
-- 所有代码必须包含 LOG 宏和关键埋点
-- 提供 state_to_str() 函数
-- 生成 tasks.json 实现一键闭环</pre>
-        </div>
-        
-        <h3>📈 闭环演示（5分钟生成 + 15分钟调试）</h3>
-        <div class="code-block">
-            <pre>$ make full_loop
+### 解决了什么
+
+- 工具链无缝集成，不再在 Keil、烧录 GUI、串口助手之间切来切去
+- 闭环反馈延迟从分钟级降到秒级
+- AI 可以直接读取 VSCode 终端的日志输出（通过 Continue / Cline 等插件）
+
+### 遗留问题
+
+这套流程已经很强了，但**启动一个新项目**时，你仍然需要手动创建目录、写 LOG 宏、搭建状态机框架——这些重复性劳动占用了你真正思考的时间。能不能让 AI 自动完成？
+
+---
+
+## 第五招：Vibe + Verify —— 分层协作的终极范式
+
+### 核心思想
+
+- **Vibe 层**：使用**极低成本模型**（minimax、DeepSeek-V2 异步 API）以“氛围编程”模式，快速生成**已经植入结构化日志和标准目录结构**的工程模板。
+- **Verify 层**：使用**高性能模型**对运行日志做深度分析，输出精准修改。
+- 两层之间通过 `agents.md`（AI 行为准则）统一规范，确保生成与分析对齐。
+
+### 为什么这是“终极”
+
+它解决了以上所有层次的遗留问题：
+
+| 层次 | 遗留问题 | 第五招如何解决 |
+|------|----------|----------------|
+| 第一招 | 需要手动加日志 | Vibe 生成的模板自带 LOG 宏和关键埋点，覆盖率 >90% |
+| 第二招 | 需要手动整理工程目录 | Vibe 生成标准目录，包含 docs/、host/、logs/ |
+| 第三招 | 分析代码手动复制 | 通过 agents.md 让高性能模型直接输出 git diff，侧边栏模型自动应用 |
+| 第四招 | 新项目搭建繁琐 | Vibe 一次性生成完整 tasks.json 和 Makefile |
+
+### 技术实现细节
+
+#### 5.1 提示词模板（给 Vibe 层）
+
+```markdown
+生成 STM32 CAN 自组织地址协议工程，必须满足：
+1. 使用如下 LOG 宏（已包含 __FILE__ 和 __LINE__）：
+   #define LOG(level, fmt, ...) printf("[%s] %s:%d " fmt "\r\n", level, __FILE__, __LINE__, ##__VA_ARGS__)
+2. 在每个状态转换、CAN 帧收发、关键变量变化处调用 LOG，输出 key=value
+3. 目录结构遵循：firmware/、host/、docs/、logs/
+4. 在 .vscode/tasks.json 中定义 build、flash、monitor、full_loop 任务
+5. 所有代码一次性输出，无需解释
+```
+
+#### 5.2 agents.md（统一两个模型的行为）
+
+```markdown
+# agents.md - AI 协作规范
+
+## 对 Vibe 模型（生成模板时）
+- 必须包含 LOG 宏定义
+- 每个 .c 文件的第一行日志必须是 `LOG("INFO", "module init")`
+- 状态枚举必须提供 `state_to_str()` 函数
+
+## 对 Verify 模型（分析日志时）
+- 收到日志后，首先定位 `文件:行号` 对应的源码
+- 输出修改建议必须采用 `git diff` 格式
+- 如果日志中出现数字状态（如 state=6），必须要求用户提供枚举映射，不得猜测
+- 每次分析后，输出“下一步验证命令”（例如：重新烧录后观察第 XXX 行日志）
+```
+
+#### 5.3 完整闭环工作流（5 分钟模板生成 + 15 分钟调试）
+
+```
+[Vibe] 用户：按提示词模板生成工程
+[Vibe] 模型输出 15 个文件（含 LOG 宏、状态机、tasks.json）
+
+用户：make full_loop → 烧录 → 终端输出日志：
 [INFO] main.c:45 epoch=1
 [WARN] can_slave.c:415 epoch mismatch local=1 remote=2
 
-→ 将项目+日志 给 DeepSeek-R1
-→ 输出 diff:
-diff --git a/can_slave.c b/can_slave.c
-@@ -410,6 +410,8 @@
- if (rx_epoch > local_epoch) {
-     local_epoch = rx_epoch;
-+    LOG("INFO", "epoch updated %d->%d", local_epoch-1, local_epoch);
-+    reset_commit_guard();
- }
+用户：将整个工程目录 + 日志 发送给 Verify 模型
 
-→ 应用 diff → 再次 full_loop → epoch 同步成功</pre>
-        </div>
-        
-        <div class="highlight" style="background:#eef6fc;">
-            <i class="fas fa-chart-simple"></i> <strong>综合效果：</strong> 新项目启动 10 分钟，日志覆盖率 >95%，中等 bug 定位 1-2 轮，总 token 成本约 $0.35/项目，代码可维护性达到产品级。
-        </div>
-    </div>
+[Verify] 分析：
+- 定位到 can_slave.c:415，检查 epoch 更新逻辑
+- 发现缺少 volatile 关键字和 commit_guard 复位
+- 输出 git diff：
+  diff --git a/firmware/src/can_slave.c b/firmware/src/can_slave.c
+  @@ -410,6 +410,8 @@
+       if (rx_epoch > local_epoch) {
+           local_epoch = rx_epoch;
+  +        LOG("INFO", "epoch updated %d->%d", local_epoch-1, local_epoch);
+  +        reset_commit_guard();
+       }
 
-    <!-- 量化对比表 -->
-    <div class="card">
-        <h2><i class="fas fa-chart-simple"></i> 量化对比 · 五层进化效果</h2>
-        <div style="overflow-x: auto;">
-            <table>
-                <thead>
-                    <tr><th>指标</th><th>纯手写+传统调试</th><th>纯 Vibe Coding</th><th>第一~四招组合</th><th>第五招 Vibe+Verify</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td>新项目启动时间</td><td>2-4 小时</td><td>10 分钟</td><td>1 小时</td><td><strong>10 分钟</strong></td></tr>
-                    <tr><td>日志覆盖率(关键路径)</td><td>20-30%</td><td>≈0%</td><td>80%</td><td><strong>95%+</strong></td></tr>
-                    <tr><td>中等bug定位轮次</td><td>5-10 轮</td><td>无法定位(猜清单)</td><td>2-3 轮</td><td><strong>1-2 轮</strong></td></tr>
-                    <tr><td>总token成本/项目</td><td>—</td><td>$0.5~1</td><td>$1~2</td><td><strong>$0.35</strong> (0.05生成+0.3分析)</td></tr>
-                    <tr><td>代码可维护性</td><td>中</td><td>极低(脆弱)</td><td>高</td><td><strong>高+模板可复用</strong></td></tr>
-                    <tr><td>团队知识复用</td><td>依赖个人</td><td>不可复用</td><td>部分文档化</td><td><strong>agents.md + case库版本化</strong></td></tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="quote" style="margin-top: 0.5rem;"><i class="fas fa-rocket"></i> 第五招同时解决了「速度」与「可靠性」的矛盾，是目前已知成本最低、工程性最强的 AI 编程范式。</div>
-    </div>
+用户：应用 diff → make full_loop → 新日志显示 epoch 同步正常
+```
 
-    <!-- 进阶优化 -->
-    <div class="card">
-        <h2><i class="fas fa-lightbulb"></i> 进阶锦囊 · 让成本再降 50%</h2>
-        <div class="grid-2">
-            <div><i class="fas fa-clock"></i> <strong>异步排队生成</strong> — 使用 minimax/DeepSeek 异步 API 批量生成模板变体，价格再降50%</div>
-            <div><i class="fas fa-filter"></i> <strong>日志预处理</strong> — 用低成本模型过滤无关行、保留关键键值对，减少高成本模型的上下文</div>
-            <div><i class="fas fa-database"></i> <strong>调试案例库</strong> — 将日志特征+最终diff向量化存储，新问题命中直接复用，无需调用高性能模型</div>
-            <div><i class="fas fa-code-branch"></i> <strong>git diff 原生应用</strong> — 要求 AI 输出 git apply 兼容格式，一键合入</div>
-        </div>
-        <div class="highlight">
-            📌 适用边界：嵌入式状态机、协议栈、后端服务、任何需要精确状态跟踪的系统均适用；一次性脚本或极简原型(&lt;200行)无须过度工程。
-        </div>
-    </div>
+### 成本与效率终局对比
 
-    <!-- 核心原则总结 -->
-    <div class="card" style="background: #fefefe; border-color: #dceaff;">
-        <h2><i class="fas fa-crown"></i> 核心原则 · 人机共舞的工程化闭环</h2>
-        <div class="grid-2" style="margin-bottom: 1rem;">
-            <div><i class="fas fa-eye icon"></i> <strong>可观测性内建</strong> — 结构化日志 + 行号是 AI 的眼睛</div>
-            <div><i class="fas fa-sync-alt icon"></i> <strong>闭环反馈</strong> — 每轮修改必须有新日志驱动，杜绝猜测</div>
-            <div><i class="fas fa-layer-group icon"></i> <strong>分层分工</strong> — 模板生成用低成本模型，深度分析用高性能模型</div>
-            <div><i class="fas fa-handshake icon"></i> <strong>共情设计</strong> — 通过 agents.md 要求 AI 主动询问缺失信息(状态映射/硬件细节)</div>
-            <div><i class="fas fa-toolbox icon"></i> <strong>工具链一体化</strong> — VSCode tasks.json + 终端，零切换调试</div>
-            <div><i class="fas fa-archive icon"></i> <strong>知识版本化</strong> — 保存成功案例、diff记录，形成团队资产</div>
-        </div>
-        <div style="border-top: 1px solid #e4eef9; padding-top: 1rem; font-size: 0.95rem; color: #2c5282;">
-            <i class="fas fa-quote-left"></i> 日志是AI的眼睛，闭环是AI的思维，共情是你与AI的默契。将这三者交给AI，它便从「会说话的机器」进化为「真正懂你的伙伴」。
-        </div>
-    </div>
+| 指标 | 纯手写 | 纯 Vibe | 第一至四招 | **第五招 Vibe+Verify** |
+|------|--------|---------|------------|------------------------|
+| 新项目启动时间 | 2-4 小时 | 10 分钟 | 1 小时（手动加日志+目录） | **10 分钟** |
+| 日志覆盖率 | 20% | 0% | 80%（手动补充） | **95%**（自动生成） |
+| 中等 bug 定位轮次 | 5-10 | 无法定位 | 2-3 轮 | **1-2 轮** |
+| 单项目总 token 成本 | 不适用 | ~$0.5-1 | ~$1-2 | **~$0.35**（0.05 生成 + 0.3 分析） |
+| 代码可维护性 | 中 | 很低 | 高 | **高 + 可复用模板** |
 
-    <footer>
-        <i class="fas fa-code"></i> Vibe+Verify 范式 · 源于嵌入式CAN调试实战 ｜ 分层进化，一招比一招强 ｜ 现阶段最强最经济AI协作方法论
-        <br><span style="font-size: 0.75rem;">基于结构化日志、多模型协作、VSCode一体化与氛围编程模板生成 — 让调试从「摸黑走路」到「拨云见日」</span>
-    </footer>
-</div>
-</body>
-</html>
+---
 
+## 总结：五层进化路线图
 
-这里主要记录嵌入式、Qt、自动化和 AI 协作开发相关内容。里主要记录嵌入式、Qt、自动化和 AI 协作开发相关内容。
+```
+第零层：贴代码让 AI 猜
+   ↓ 痛点：AI 看不见运行时
+第一招：结构化日志（让 AI 拥有眼睛）
+   ↓ 痛点：缺少工程上下文
+第二招：统一工程目录（让 AI 理解设计）
+   ↓ 痛点：写代码和分析分离，手动切换
+第三招：多模型协作（低成本写，高成本分析）
+   ↓ 痛点：工具链割裂，反馈慢
+第四招：VSCode 一体化（一键闭环）
+   ↓ 痛点：新项目模板搭建仍重复劳动
+第五招：Vibe + Verify（AI 生成自带可观测性的模板 + 深度调试）
+   ↓
+终局：最低成本、最高可靠性的 AI 编程范式
+```
+
+**核心可迁移思想**：这套五层进化不限于嵌入式，任何需要调试的系统（后端、前端、数据流水线）都可以按同样路径优化——先让系统输出结构化可观测信息，再统一上下文，再分层模型，再集成工具链，最后用低成本模型生成“已经可观测的”初始模板。
+
+> 每一招都解决前一招的最大痛点，而第五招是目前已知的终点。
